@@ -14,12 +14,19 @@ front:
     - ./www:/var/www
     - ./sites:/etc/nginx/conf.d
     - ./logs:/var/log/supervisor
+    - ./conf/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    - ./conf/nginx.conf:/etc/nginx/nginx.conf
+    - ./conf/php.ini:/etc/php5/fpm/conf.d/40-custom.ini
+    - ./conf/php-cli.ini:/etc/php5/cli/conf.d/40-custom.ini
 
 mysql:
   image: mysql
   ports:
     - "3306:3306"
+  volumes:
+   - /var/lib/mysql
   environment:
+    MYSQL_DATABASE: drupal
     MYSQL_ROOT_PASSWORD: root
 
 #mongo:

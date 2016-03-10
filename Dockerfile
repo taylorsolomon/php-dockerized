@@ -48,9 +48,25 @@ RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d
 RUN apt-get update && apt-get install -y hhvm
 
 # Add configuration files
-COPY conf/nginx.conf /etc/nginx/
-COPY conf/supervisord.conf /etc/supervisor/conf.d/
-COPY conf/php.ini /etc/php5/fpm/conf.d/40-custom.ini
+# COPY conf/nginx.conf /etc/nginx/
+# COPY conf/supervisord.conf /etc/supervisor/conf.d/
+# COPY conf/php.ini /etc/php5/fpm/conf.d/40-custom.ini
+# COPY conf/php-cli.ini /etc/php5/cli/conf.d/40-custom.ini
+
+# Install Drupal Console
+RUN curl https://drupalconsole.com/installer -L -o drupal.phar
+RUN mv drupal.phar /usr/local/bin/drupal
+RUN chmod +x /usr/local/bin/drupal
+RUN drupal init --override
+
+# Install Drush
+RUN wget http://files.drush.org/drush.phar
+RUN chmod +x drush.phar
+RUN mv drush.phar /usr/local/bin/drush
+RUN drush init -y
+
+# Set XTERM as TERM
+ENV TERM xterm
 
 ################################################################################
 # Volumes

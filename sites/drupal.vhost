@@ -1,6 +1,6 @@
 server {
   server_name drupal.io;
-  root /var/www/drupal-eight; ## <-- Your only path reference.
+  root /var/www/d8; ## <-- Your only path reference.
 
   location = /favicon.ico {
     log_not_found off;
@@ -54,7 +54,7 @@ server {
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_intercept_errors on;
-    fastcgi_pass unix:/var/run/hhvm/hhvm.sock;
+    fastcgi_pass  unix:/var/run/php5-fpm.sock;
   }
 
   location ~ ^/sites/.*/files/styles/ {
